@@ -26,7 +26,7 @@ async def telegram_webhook(request: Request):
 
 @app.on_event("startup")
 async def on_startup():
-    await bot.set_webhook("https://YOUR_DOMAIN.onrender.com/webhook")
+    await bot.set_webhook("https://telegram-dice-bot-8xkj.onrender.com")
 
 
 @app.on_event("shutdown")
