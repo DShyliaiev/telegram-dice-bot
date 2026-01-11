@@ -13,22 +13,23 @@ bot = Bot(
     token=BOT_TOKEN,
     default=DefaultBotProperties(parse_mode="HTML")
 )
+
 dp = Dispatcher()
 dp.include_router(router)
 
-
+# Telegram шлёт сюда обновления
 @app.post("/webhook")
 async def telegram_webhook(request: Request):
     update = Update.model_validate(await request.json())
     await dp.feed_update(bot, update)
     return {"ok": True}
 
-
+# Устанавливаем webhook при старте сервиса Render
 @app.on_event("startup")
 async def on_startup():
-    await bot.set_webhook("https://telegram-dice-bot-8xkj.onrender.com")
+    await bot.set_webhook("https://telegram-dice-bot-8xkj.onrender.com/webhook")
 
-
+# Удаляем webhook при завершении (необязательно)
 @app.on_event("shutdown")
 async def on_shutdown():
     await bot.delete_webhook()
